@@ -44,6 +44,16 @@ namespace BillingSystem.Billing.Storage
             contractsArchive.Add(contr);
             contracts.Remove(contr);
             TerminalWriteOff(this, contr.Number);
-        }   
+        }  
+        public void FreezeInvoicesForLatePayments()
+        {
+            foreach (var contract in contracts)
+            {
+                if (contract.Account.Balance<=0)
+                {
+                    contract.Account.AccountActive = false;
+                }
+            }
+        }
     }
 }
