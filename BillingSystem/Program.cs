@@ -11,7 +11,7 @@ namespace BillingSystem
     {
         static void Main(string[] args)
         {
-           
+            TestBilling ts = new TestBilling();
         }
     }
 }

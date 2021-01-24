@@ -11,7 +11,7 @@ namespace BillingSystem.Billing.Entities.Contracts
     public interface IContract
     {
         DateTime ContractStartDate { get; }
-        Nullable<DateTime> ContractCloseDate { get; }
+        Nullable<DateTime> ContractCloseDate { get; set; }
         IUser Client { get; }
         ITariffPlan TariffPlan { get; }
         IAccount Account { get; set; }

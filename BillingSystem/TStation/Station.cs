@@ -91,12 +91,17 @@ namespace BillingSystem.TStation
             terminal.IncomingRequest += (sender, request) => Console.WriteLine("{0} received request for incoming connection from {1}", terminal.Number, request.Source);
             terminal.Online += (sender, args) => { Console.WriteLine("Terminal {0} turned to online mode", terminal.Number); };
             terminal.Offline += (sender, args) => { Console.WriteLine("Terminal {0} turned to offline mode", terminal.Number); };
-
+            terminal.Plugging += (sender, args) => { Console.WriteLine("Terminal {0} turned On", terminal.Number); };
+            terminal.UnPlugging += (sender, args) => { Console.WriteLine("Terminal {0} turned Off", terminal.Number); };
         }
         public void RegisterEventHandlersForPort(IPort port)
         {
             port.PortStateChanged += (sender, state) => { Console.WriteLine("Station detected the port {0} changed its State to {1}", port.GetHashCode(), state); };
 
+        }
+        public void AddTerminal(object sender,ITerminal terminal)
+        {
+            Add(terminal);
         }
 
         public void Add(ITerminal terminal)
@@ -105,26 +110,19 @@ namespace BillingSystem.TStation
             if (freePort != null)
             {
                 _terminalCollection.Add(terminal);
-
-                MapTerminalToPort(terminal, freePort);
-
-                // register event handlers
-
-                this.RegisterEventHandlersForTerminal(terminal);
-                this.RegisterEventHandlersForPort(freePort);
             }
             else if (freePort == null)
             {
                 freePort = new Port();
                 _terminalCollection.Add(terminal);
-
+            }
                 MapTerminalToPort(terminal, freePort);
 
                 // register event handlers
 
                 this.RegisterEventHandlersForTerminal(terminal);
                 this.RegisterEventHandlersForPort(freePort);
-            }
+            
         }
 
         protected void MapTerminalToPort(ITerminal terminal, IPort port)
@@ -132,6 +130,15 @@ namespace BillingSystem.TStation
             _portMapping.Add(terminal.Number, port);
             port.RegisterEventHandlersForTerminal(terminal);
             terminal.RegisterEventHandlersForPort(port);
+        }
+        public void DeliteTerminal(object sender,PhoneNumber number)
+        {
+            Delite(number);
+        }
+        public void Delite(PhoneNumber number)
+        {
+            UnMapTerminalFromPort(GetTerminalByPhoneNumber(number), GetPortByPhoneNumber(number));
+            _terminalCollection.RemoveAll(x => x.Number == number);
         }
 
         protected void UnMapTerminalFromPort(ITerminal terminal, IPort port)

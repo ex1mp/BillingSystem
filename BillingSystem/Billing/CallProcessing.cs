@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BillingSystem.Billing.CallHandling
+namespace BillingSystem.Billing
 {
     public class CallProcessing
     {

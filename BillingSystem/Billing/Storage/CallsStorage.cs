@@ -5,14 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BillingSystem.Billing.CallHandling
+namespace BillingSystem.Billing.Storage
 {
     public class CallsStorage
     {
         private List<ICallInfo> callStorage;
+
+        public List<ICallInfo> CallStorage { get => callStorage; set => callStorage = value; }
+
         public CallsStorage()
         {
-           callStorage = new List<ICallInfo>();
+           CallStorage = new List<ICallInfo>();
 
         }
         public IEnumerable<ICallInfo> ReportAllCals(PhoneNumber number,IEnumerable<ICallInfo> callStorage)
