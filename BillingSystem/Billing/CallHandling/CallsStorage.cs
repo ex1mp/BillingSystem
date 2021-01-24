@@ -1,5 +1,4 @@
-﻿using BillingSystem.Billing.Storage;
-using BillingSystem.CallInformation;
+﻿using BillingSystem.CallInformation;
 using BillingSystem.TStation.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,8 +7,14 @@ using System.Text;
 
 namespace BillingSystem.Billing.CallHandling
 {
-    public class GetCallsReport
+    public class CallsStorage
     {
+        private List<ICallInfo> callStorage;
+        public CallsStorage()
+        {
+           callStorage = new List<ICallInfo>();
+
+        }
         public IEnumerable<ICallInfo> ReportAllCals(PhoneNumber number,IEnumerable<ICallInfo> callStorage)
         {
             return callStorage.Where(x => x.Source == number);

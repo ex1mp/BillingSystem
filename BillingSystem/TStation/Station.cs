@@ -113,6 +113,18 @@ namespace BillingSystem.TStation
                 this.RegisterEventHandlersForTerminal(terminal);
                 this.RegisterEventHandlersForPort(freePort);
             }
+            else if (freePort == null)
+            {
+                freePort = new Port();
+                _terminalCollection.Add(terminal);
+
+                MapTerminalToPort(terminal, freePort);
+
+                // register event handlers
+
+                this.RegisterEventHandlersForTerminal(terminal);
+                this.RegisterEventHandlersForPort(freePort);
+            }
         }
 
         protected void MapTerminalToPort(ITerminal terminal, IPort port)
